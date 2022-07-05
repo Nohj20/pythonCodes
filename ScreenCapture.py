@@ -2,8 +2,7 @@ from __future__ import print_function
 import desktopmagic
 from desktopmagic.screengrab_win32 \
 import(getDisplayRects,saveScreenToBmp,getScreenAsImage,getRectAsImage,getDisplaysAsImages)
-from datetime import date
-from datetime import datetime
+from datetime import *
 import os
 
 os.system("mode con cols=40 lines=5")
@@ -16,13 +15,26 @@ myDate = date.today()
 if day == 'Monday':
     subject = 'HM9'
 if day == 'Tuesday':
-    subject = input('Enter Subject (1)STS, (2)REED4 > ')
+    subjectChoice = int(input('Enter Subject (1)STS, (2)REED4 > '))
+    if subjectChoice == 1:
+        subject = 'STS'
+    if subjectChoice == 2:
+        subject = 'REED4'
+
 if day == 'Wednesday':
-    subject = input('Enter Subject (1)PEE, (2)PE4 > ')
+    subjectChoice = int(input('Enter Subject (1)PEE, (2)PE4 > '))
+    if subjectChoice == 1:
+        subject = 'PEE'
+    if subjectChoice == 2:
+        subject = 'PE4'
 if day == 'Thursday':
     subject = 'Laboratory'
 if day == 'Friday':
-    subject = input('Enter Subject (1)HM8, (2)RPH > ')
+    subjectChoice = int(input('Enter Subject (1)HM8, (2)RPH > '))
+    if subjectChoice == 1:
+        subject = 'HM8'
+    if subjectChoice == 2:
+        subject = 'RPH'
 
 while True: 
     print('### Full Screen Capture ###')
