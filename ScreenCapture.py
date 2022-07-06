@@ -3,9 +3,10 @@ import desktopmagic
 from desktopmagic.screengrab_win32 \
 import(getDisplayRects,saveScreenToBmp,getScreenAsImage,getRectAsImage,getDisplaysAsImages)
 from datetime import *
+from PIL import Image
 import os
 
-os.system("mode con cols=40 lines=5")
+os.system("mode con cols=50 lines=7")
 
 screens=(getDisplayRects())
 
@@ -27,6 +28,7 @@ if day == 'Wednesday':
         subject = 'PEE'
     if subjectChoice == 2:
         subject = 'PE4'
+
 if day == 'Thursday':
     subject = 'Laboratory'
 if day == 'Friday':
@@ -37,7 +39,8 @@ if day == 'Friday':
         subject = 'RPH'
 
 while True: 
-    print('### Full Screen Capture ###')
+    print(f'\nSubject => {subject}')
+    print('\n### Full Screen Capture ###')
     print('### Hit "ctrl+c" to quit ###\n')
     while True:
         try:
@@ -62,4 +65,14 @@ while True:
         os.makedirs(path)
 
     rect = getRectAsImage(screens[myScreen])
-    rect.save(rf'G:/JOHN/APCSM/2nd Year 2nd Sem/{subject}/Attendance/{myDate}/{phrase}.png', format='png')
+    rect.save(rf'{path}/{phrase}.png', format='png')
+    while True:
+        viewFile = input('(I)Open image, (F)View folder, (Q)Exit: ')
+        if viewFile.upper() == 'I':
+            im = Image.open(rf'{path}/{phrase}.png')
+            im.show()
+        if viewFile.upper() == 'F':
+            dir = os.path.realpath(path)
+            os.startfile(dir)
+        if viewFile.upper() == 'Q':
+            break
