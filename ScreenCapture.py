@@ -12,53 +12,52 @@ screens=(getDisplayRects())
 
 day = datetime.now().date().strftime('%A')
 myDate = date.today()
+hour = datetime.now().time().hour
+minute = datetime.now().time().minute
 
 if day == 'Monday':
     subject = 'HM9'
+
 if day == 'Tuesday':
-    subjectChoice = int(input('Enter Subject (1)STS, (2)REED4 > '))
-    if subjectChoice == 1:
-        subject = 'STS'
-    if subjectChoice == 2:
-        subject = 'REED4'
+    subject = 'STS' if hour <= 12 and minute < 30 else 'REED4'
 
 if day == 'Wednesday':
-    subjectChoice = int(input('Enter Subject (1)PEE, (2)PE4 > '))
-    if subjectChoice == 1:
-        subject = 'PEE'
-    if subjectChoice == 2:
-        subject = 'PE4'
+    subject = 'PEE' if hour <= 12 and minute < 30 else 'PE4'
 
-if day == 'Thursday':
+if day == 'Monday':
     subject = 'Laboratory'
+
 if day == 'Friday':
-    subjectChoice = int(input('Enter Subject (1)HM8, (2)RPH > '))
-    if subjectChoice == 1:
-        subject = 'HM8'
-    if subjectChoice == 2:
-        subject = 'RPH'
+    subject = 'HM8' if hour <= 12 and minute < 30 else 'RPH'
 
 while True: 
     print(f'\nSubject => {subject}')
     print('\n### Full Screen Capture ###')
-    print('### Hit "ctrl+c" to quit ###\n')
+    print('### Type "quit" or "exit" to quit ###\n')
     while True:
-        try:
-            myScreen = int(input('Which Screen? (0-9): '))
+        screen = ['0', '1']
+        myScreen = input('Which Screen? (0 or 1) > ')
+        if myScreen not in screen:
+            if myScreen.upper() == 'QUIT' or myScreen.upper() == 'EXIT':
+                quit()
+            print('### Input only 0 or 1 ###')
+        else:
+            myScreen = int(myScreen)
             break
-        except ValueError:
-            print('Input only numbers from 0 - 9')
 
     while True:
-        timeInOut = int(input('(1)Time in, (2)Time out: '))
-        if timeInOut == 1:
-            phrase = "Time In"
+        labels = {'1':'Time In', '2':'Time Out'}
+        timeInOut = input('(1)Time in, (2)Time out: ')
+        if timeInOut.upper() == 'QUIT' or timeInOut.upper() == 'EXIT':
+            quit()
+        if timeInOut not in labels:
+            print('### Input only 1 or 2 ###')
+        if timeInOut == '1':
+            phrase = labels[timeInOut]
             break
-        elif timeInOut == 2:
-            phrase = "Time out"
+        if timeInOut == '2':
+            phrase = labels[timeInOut]
             break
-        else:
-            print('Invalid choice')
 
     path = rf'G:/JOHN/APCSM/2nd Year 2nd Sem/{subject}/Attendance/{myDate}'
     if not os.path.exists(path):
@@ -66,13 +65,21 @@ while True:
 
     rect = getRectAsImage(screens[myScreen])
     rect.save(rf'{path}/{phrase}.png', format='png')
+
     while True:
+        choices = ['I', 'F', 'Q']
+        dir = os.path.realpath(path)
         viewFile = input('(I)Open image, (F)View folder, (Q)Exit: ')
-        if viewFile.upper() == 'I':
+        vf = viewFile.upper()
+
+        if vf == 'QUIT' or vf == 'EXIT':
+            quit()
+        if vf == choices[0]:
             im = Image.open(rf'{path}/{phrase}.png')
             im.show()
-        if viewFile.upper() == 'F':
-            dir = os.path.realpath(path)
+        elif vf == choices[1]:
             os.startfile(dir)
-        if viewFile.upper() == 'Q':
+        elif vf == choices[2]:
             break
+        else:
+            print('### Input I, F, or Q only ###')
