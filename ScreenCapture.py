@@ -30,6 +30,9 @@ if day == 'Monday':
 if day == 'Friday':
     subject = 'HM8' if hour <= 12 and minute < 30 else 'RPH'
 
+if day == 'Saturday' or day == 'Sunday':
+    subject = day
+
 while True: 
     print(f'\nSubject => {subject}')
     print('\n### Full Screen Capture ###')
