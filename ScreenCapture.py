@@ -24,7 +24,7 @@ if day == 'Tuesday':
 if day == 'Wednesday':
     subject = 'PEE' if hour <= 12 and minute < 30 else 'PE4'
 
-if day == 'Monday':
+if day == 'Thursday':
     subject = 'Laboratory'
 
 if day == 'Friday':
