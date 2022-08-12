@@ -22,15 +22,12 @@ if day == 'Tuesday':
     subject = 'STS' if hour <= 12 and minute < 30 else 'REED4'
 
 if day == 'Wednesday':
-    subject = 'PEE' if hour <= 12 and minute < 30 else 'PE4'
-
-if day == 'Thursday':
-    subject = 'Laboratory'
+    subject = 'RPH' if hour <= 12 and minute < 30 else 'PE4'
 
 if day == 'Friday':
-    subject = 'HM8' if hour <= 12 and minute < 30 else 'RPH'
+    subject = 'HM8' if hour <= 12 and minute < 30 else 'PEE'
 
-if day == 'Saturday' or day == 'Sunday':
+if day == 'Saturday' or day == 'Sunday' or day == 'Thursday':
     subject = day
 
 while True: 
