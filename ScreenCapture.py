@@ -18,17 +18,47 @@ minute = datetime.now().time().minute
 if day == 'Monday':
     subject = 'HM9'
 
-if day == 'Tuesday':
-    subject = 'STS' if hour <= 12 and minute < 30 else 'REED4'
+elif day == 'Tuesday':
+    if hour <= 12 and minute < 30:
+        subject = 'STS'
+    if hour > 12:
+        subject = 'REED4'
 
-if day == 'Wednesday':
-    subject = 'RPH' if hour <= 12 and minute < 30 else 'PE4'
+elif day == 'Wednesday':
+    if hour <= 12 and minute < 30:
+        subject = 'RPH'
+    if hour > 12:
+        subject = 'PE4'
 
-if day == 'Friday':
-    subject = 'HM8' if hour <= 12 and minute < 30 else 'PEE'
+elif day == 'Friday':
+    if hour <= 12 and minute < 30:
+        subject = 'HM8'
+    if hour > 12:
+        subject = 'PEE'
 
-if day == 'Saturday' or day == 'Sunday' or day == 'Thursday':
+elif day == 'Saturday':
+    if hour > 12:
+        subject = 'PE4'
+    else:
+        subject = input('Subject: ')
+
+else:
     subject = day
+
+#if day == 'Monday':
+#    subject = 'HM9'
+
+#if day == 'Tuesday':
+#    subject = 'STS' if hour <= 12 and minute < 30 else 'REED4'
+
+#if day == 'Wednesday':
+#    subject = 'RPH' if hour <= 12 and minute < 30 else 'PE4'
+
+#if day == 'Friday':
+#    subject = 'HM8' if hour <= 12 and minute < 30 else 'PEE'
+
+#if day == 'Saturday' or day == 'Sunday' or day == 'Thursday':
+#    subject = day
 
 while True: 
     print(f'\nSubject => {subject}')
