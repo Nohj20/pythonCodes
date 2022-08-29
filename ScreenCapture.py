@@ -43,7 +43,7 @@ elif day == 'Saturday':
         subject = input('Subject: ')
 
 else:
-    subject = day
+    subject = input('Subject: ')
 
 #if day == 'Monday':
 #    subject = 'HM9'
