@@ -4,9 +4,10 @@ from desktopmagic.screengrab_win32 \
 import(getDisplayRects,saveScreenToBmp,getScreenAsImage,getRectAsImage,getDisplaysAsImages)
 from datetime import *
 from PIL import Image
-import os
+import os, win32gui, win32con
 
 os.system("mode con cols=50 lines=7")
+conWin = win32gui.GetForegroundWindow()
 
 screens=(getDisplayRects())
 
@@ -18,47 +19,17 @@ minute = datetime.now().time().minute
 if day == 'Monday':
     subject = 'HM9'
 
-elif day == 'Tuesday':
-    if hour <= 12 and minute < 30:
-        subject = 'STS'
-    if hour > 12:
-        subject = 'REED4'
+if day == 'Tuesday':
+    subject = 'STS' if hour <= 12  else 'REED4'
 
-elif day == 'Wednesday':
-    if hour <= 12 and minute < 30:
-        subject = 'RPH'
-    if hour > 12:
-        subject = 'PE4'
+if day == 'Wednesday':
+    subject = 'RPH' if hour <= 12  else 'PE4'
 
-elif day == 'Friday':
-    if hour <= 12 and minute < 30:
-        subject = 'HM8'
-    if hour > 12:
-        subject = 'PEE'
+if day == 'Friday':
+    subject = 'HM8' if hour <= 12  else 'PEE'
 
-elif day == 'Saturday':
-    if hour > 12:
-        subject = 'PE4'
-    else:
-        subject = input('Subject: ')
-
-else:
+if day == 'Saturday' or day == 'Sunday' or day == 'Thursday':
     subject = input('Subject: ')
-
-#if day == 'Monday':
-#    subject = 'HM9'
-
-#if day == 'Tuesday':
-#    subject = 'STS' if hour <= 12 and minute < 30 else 'REED4'
-
-#if day == 'Wednesday':
-#    subject = 'RPH' if hour <= 12 and minute < 30 else 'PE4'
-
-#if day == 'Friday':
-#    subject = 'HM8' if hour <= 12 and minute < 30 else 'PEE'
-
-#if day == 'Saturday' or day == 'Sunday' or day == 'Thursday':
-#    subject = day
 
 while True: 
     print(f'\nSubject => {subject}')
@@ -93,8 +64,12 @@ while True:
     if not os.path.exists(path):
         os.makedirs(path)
 
+    win32gui.ShowWindow(conWin, win32con.SW_HIDE)
+
     rect = getRectAsImage(screens[myScreen])
     rect.save(rf'{path}/{phrase}.png', format='png')
+
+    win32gui.ShowWindow(conWin, win32con.SW_SHOW)
 
     while True:
         choices = ['I', 'F', 'Q']
