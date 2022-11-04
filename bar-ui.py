@@ -77,11 +77,6 @@ class MainGrid(GridLayout):
         self.ingredients = TextInput(multiline=True, font_size=30)
         self.add_widget(self.ingredients)
 
-        #Answers Section
-        self.add_widget(Label(text='Correct Ingredients: ', font_size=30))
-        self.correctIngredients = TextInput(text='', font_size=30)
-        self.add_widget(self.correctIngredients)
-
         #Buttons
         self.randomize = Button(text='Randomize', font_size=40)
         self.randomize.bind(on_press=self.randomizeDrink)
@@ -153,17 +148,14 @@ class MainGrid(GridLayout):
 
         if self.inputs == self.answers:
             self.score += 1
-            result = 'You are Correct!'
+            result = 'You were Correct!'
         else:
-            result = 'You are Wrong!'
+            result = 'You were Incorrect!'
         
         for i in self.answers:
             self.correctIng += f'{i}\n'
 
         self.scoreLabel.text = str(self.score)
-
-        self.clearInputs()
-        self.randomizeDrink(instance)
 
         layout = GridLayout(cols=1, padding=10)
 
@@ -175,9 +167,8 @@ class MainGrid(GridLayout):
         layout.add_widget(popupLabel)
         layout.add_widget(closeBtn)
 
-        popup = Popup(title='My popup', content=layout, size_hint=(None, None), size=(400,400))
+        popup = Popup(title='My popup', content=layout, size=(400,400))
         popup.open()
-
         closeBtn.bind(on_press=popup.dismiss)
 
 
