@@ -1,11 +1,11 @@
-import kivy
 from kivy.app import App
 from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
+from kivy.uix.popup import Popup
 import random as rn
-    
+
 
 class MainGrid(GridLayout):
     def __init__(self, **kwargs):
@@ -30,8 +30,8 @@ class MainGrid(GridLayout):
             self.drinks[0][3]:'1jigger Vodka, 15ml Cointreau, 30ml Cranberry Juice, 15ml Lime Juice, Martini Glass, Lemon Slice',
             self.drinks[1][0]:'30ml Brandy, 30ml Cream/Evap, 30ml Crem de Cacao Brown, Cocktail Glass, Nutmeg',
             self.drinks[1][1]:'30ml Crem de Menthe Green, 30ml Cream/Evap, 30ml Crem de Cacao White, Cocktail Glass, Cherry',
-            self.drinks[1][2]:'50ml Vodka, 30ml Cream/Evap, 20ml Coffee Liqueur, Old Fashioned Glass, Cherry',
-            self.drinks[1][3]:'15ml Galliano, 15ml Cream/Evap, 30ml Crem de Cacao White, Cokctail Glass, Cherry',
+            self.drinks[1][2]:'50ml Vodka, 30ml Cream/Evap, 20ml Coffee Liqueur, Old Fashioned Glass, Nutmeg',
+            self.drinks[1][3]:'15ml Galliano, 15ml Cream/Evap, 30ml Crem de Cacao White, Cocktail Glass, Cherry',
             self.drinks[2][0]:'45ml Vodka, 90ml Pineapple Juice, 30ml Coconut Cream, Red Wine Glass, Pineapple Slice and Cherry',
             self.drinks[2][1]:'45ml White Rum, 15ml Sugar Syrup, 20ml Lime Juice, 6 Slices Mango, Cocktail Glass, Lime Slice',
             self.drinks[2][2]:'30ml White Rum, 30ml Coconut Milk, 90ml Pineapple Juice, Poco Grande Glass, Pineapple Slice',
@@ -130,7 +130,7 @@ class MainGrid(GridLayout):
         self.drink.text = self.check
         self.counterLabel.text = str(self.counter)
 
-    def submit(self, instance):
+    """def submit(self, instance):
         self.inputs = self.ingredients.text.split('\n')
         print(self.ingredients.text)
         print(self.inputs)
@@ -145,7 +145,40 @@ class MainGrid(GridLayout):
         self.scoreLabel.text = str(self.score)
 
         self.clearInputs()
+        self.randomizeDrink(instance)"""
+
+    def submit(self, instance):
+        self.correctIng = ''
+        self.inputs = self.ingredients.text.split('\n')
+
+        if self.inputs == self.answers:
+            self.score += 1
+            result = 'You are Correct!'
+        else:
+            result = 'You are Wrong!'
+        
+        for i in self.answers:
+            self.correctIng += f'{i}\n'
+
+        self.scoreLabel.text = str(self.score)
+
+        self.clearInputs()
         self.randomizeDrink(instance)
+
+        layout = GridLayout(cols=1, padding=10)
+
+        alertLabel = Label(text=result)
+        popupLabel = Label(text=self.correctIng)
+        closeBtn = Button(text='Close Me!')
+
+        layout.add_widget(alertLabel)
+        layout.add_widget(popupLabel)
+        layout.add_widget(closeBtn)
+
+        popup = Popup(title='My popup', content=layout, size_hint=(None, None), size=(400,400))
+        popup.open()
+
+        closeBtn.bind(on_press=popup.dismiss)
 
 
 class Main(App):
