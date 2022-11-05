@@ -1,3 +1,4 @@
+from tkinter import Grid
 from kivy.app import App
 from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
@@ -67,6 +68,8 @@ class MainGrid(GridLayout):
         self.answers = []
         self.correctIng = ''
 
+        self.scored = False
+
         #Label or Question
         self.add_widget(Label(text='Drink: ', font_size=30))
         self.drink = Label(text='', font_size=30)
@@ -106,11 +109,27 @@ class MainGrid(GridLayout):
     def randomizeDrink(self, instance):
         self.clearInputs()
         self.randomizeIndex()
+        self.scored = False
 
         self.counter += 1
 
         if self.counter > 32:
+
+            layout = GridLayout(cols=1, padding=10)
+            alertLabel = Label(text=f'You got {self.score} out of 32!')
+            closeBtn = Button(text='Close Me!')
+
+            layout.add_widget(alertLabel)
+            layout.add_widget(closeBtn)
+
+            popup = Popup(title='My popup', content=layout)
+            popup.open()
+
+            closeBtn.bind(on_press=popup.dismiss)
+
             self.counter = 1
+            self.score = 0
+            self.scoreLabel.text = str(self.score)
             self.done.clear()
             self.randomizeIndex()
 
@@ -147,7 +166,9 @@ class MainGrid(GridLayout):
         self.inputs = self.ingredients.text.split('\n')
 
         if self.inputs == self.answers:
-            self.score += 1
+            if self.scored == False:
+                self.score += 1
+                self.scored = True
             result = 'You were Correct!'
         else:
             result = 'You were Incorrect!'
