@@ -53,11 +53,12 @@ class MainGrid(GridLayout):
             self.drinks[6][2]:'45ml White Rum, 180ml Cola, 10ml Lime Juice, Highball Glass, Lime Wedge',
             self.drinks[6][3]:'30ml Gin, 30ml Campari, 30ml Sweet Red Vermouth, Old Fashioned Glass, Orange Peel',
             self.drinks[7][0]:'60ml Vodka, 15ml Dry Vermouth, Martini Glass, Olive or Lemon Twist',
-            self.drinks[7][1]:'45ml Gin, 15ml Lemon Juice, Soda Water, Cocktail Glass, LimeSlice',
+            self.drinks[7][1]:'45ml Gin, 15ml Lemon Juice, Soda Water, Cocktail Glass, Lime Slice',
             self.drinks[7][2]:'45ml Whiskey, 15ml Sweet Vermouth, Dash Angustura Bitter, Cocktail Glass, Lemon Twist',
             self.drinks[7][3]:'60ml Whiskey, 15ml Sweet Vermouth, 15ml Dry Vermouth, 2dash Angustura Bitter, Cocktail Glass, Lemon Slice'
         }
 
+#
         self.check = ''
         self.done = []
         self.counter = 0
@@ -96,6 +97,7 @@ class MainGrid(GridLayout):
         self.add_widget(Label(text='Count:', font_size=40))
         self.counterLabel = Label(text='0', font_size=40)
         self.add_widget(self.counterLabel)
+#
 
     def clearInputs(self):
         self.ingredients.text = ''
@@ -165,20 +167,27 @@ class MainGrid(GridLayout):
         self.inputs = self.ingredients.text.split('\n')
         userInputs = []
         gameAnswers = []
+        corrects = 0
 
         for i in self.inputs:
             userInputs += i.lower()
         
         for j in self.answers:
             gameAnswers += j.lower()
-
-        if userInputs == gameAnswers:
+        
+        for l in range(0,len(userInputs)):
+            if userInputs[l] in gameAnswers:
+                corrects += 1
+                
+        if corrects == len(gameAnswers):
             if self.scored == False:
-                self.score += 1
-                self.scored = True
+                    self.score += 1
+                    self.scored = True
             result = 'You were Correct!'
         else:
             result = 'You were Incorrect!'
+        
+        corrects = 0
         
         for i in self.answers:
             self.correctIng += f'{i}\n'
