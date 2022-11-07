@@ -163,8 +163,16 @@ class MainGrid(GridLayout):
     def submit(self, instance):
         self.correctIng = ''
         self.inputs = self.ingredients.text.split('\n')
+        userInputs = []
+        gameAnswers = []
 
-        if self.inputs == self.answers:
+        for i in self.inputs:
+            userInputs += i.lower()
+        
+        for j in self.answers:
+            gameAnswers += j.lower()
+
+        if userInputs == gameAnswers:
             if self.scored == False:
                 self.score += 1
                 self.scored = True
