@@ -1,7 +1,6 @@
 from __future__ import print_function
-import desktopmagic
 from desktopmagic.screengrab_win32 \
-import(getDisplayRects,saveScreenToBmp,getScreenAsImage,getRectAsImage,getDisplaysAsImages)
+import(getDisplayRects,getRectAsImage)
 from datetime import *
 from PIL import Image
 import os, win32gui, win32con
@@ -15,20 +14,21 @@ day = datetime.now().date().strftime('%A')
 myDate = date.today()
 hour = datetime.now().time().hour
 minute = datetime.now().time().minute
+days = ['Saturday', 'Sunday', 'Tuesday']
 
 if day == 'Monday':
-    subject = 'HM9'
-
-if day == 'Tuesday':
-    subject = 'STS' if hour <= 12  else 'REED4'
+    subject = 'HM12'
 
 if day == 'Wednesday':
-    subject = 'RPH' if hour <= 12  else 'PE4'
+    subject = 'PIMC' if hour <= 12  else 'GS'
+
+if day == 'Thursday':
+    subject = 'HM11'
 
 if day == 'Friday':
-    subject = 'HM8' if hour <= 12  else 'PEE'
+    subject = 'HM10' if hour <= 12  else 'FL1'
 
-if day == 'Saturday' or day == 'Sunday' or day == 'Thursday':
+if day in days:
     subject = input('Subject: ')
 
 while True: 
@@ -60,7 +60,7 @@ while True:
             phrase = labels[timeInOut]
             break
 
-    path = rf'G:/JOHN/APCSM/2nd Year 2nd Sem/{subject}/Attendance/{myDate}'
+    path = rf'G:/JOHN/APCSM/3rd Year 1st Sem/{subject}/Attendance/{myDate}'
     if not os.path.exists(path):
         os.makedirs(path)
 
