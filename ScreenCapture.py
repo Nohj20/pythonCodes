@@ -53,11 +53,17 @@ while True:
             quit()
         if timeInOut not in labels:
             print('### Input only 1 or 2 ###')
-        if timeInOut == '1':
-            phrase = labels[timeInOut]
+        if timeInOut == '1' and hour >= 12:
+            phrase = f'{labels[timeInOut]} - PM'
             break
-        if timeInOut == '2':
-            phrase = labels[timeInOut]
+        if timeInOut == '1' and hour < 12:
+            phrase = f'{labels[timeInOut]} - AM'
+            break
+        if timeInOut == '2' and hour >= 12:
+            phrase = f'{labels[timeInOut]} - PM'
+            break
+        if timeInOut == '2' and hour < 12:
+            phrase = f'{labels[timeInOut]} - AM'
             break
 
     path = rf'G:/JOHN/APCSM/3rd Year 1st Sem/{subject}/Attendance/{myDate}'
