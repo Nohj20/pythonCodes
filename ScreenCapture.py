@@ -17,16 +17,19 @@ minute = datetime.now().time().minute
 days = ['Saturday', 'Sunday', 'Tuesday']
 
 if day == 'Monday':
-    subject = 'HM12'
+    subject = 'LWR' if hour <=12 else 'Contemporary World'
+
+if day == 'Tuesday':
+    subject = 'PCG' if hour <= 12 else 'HM13'
 
 if day == 'Wednesday':
-    subject = 'PIMC' if hour <= 12  else 'GS'
+    subject = 'Business Entrepreneur'
 
 if day == 'Thursday':
-    subject = 'HM11'
+    subject = 'Laboratory'
 
 if day == 'Friday':
-    subject = 'HM10' if hour <= 12  else 'FL1'
+    subject = 'GEPPC' if hour <= 12  else 'Art Appreciation'
 
 if day in days:
     subject = input('Subject: ')
@@ -66,7 +69,7 @@ while True:
             phrase = f'{labels[timeInOut]} - AM'
             break
 
-    path = rf'G:/JOHN/APCSM/3rd Year 1st Sem/{subject}/Attendance/{myDate}'
+    path = rf'G:/JOHN/APCSM/3rd Year 2nd Sem/{subject}/Attendance/{myDate}'
     if not os.path.exists(path):
         os.makedirs(path)
 
